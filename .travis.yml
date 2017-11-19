@@ -1,0 +1,19 @@
+language: node_js
+node_js: 8
+install: yarn install
+cache: yarn
+script:
+  - yarn run build
+  - yarn run test
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+deploy:
+  - provider: heroku
+    skip_cleanup: true
+    api_key: $HEROKU_API_KEY
+    app:
+      develop: github-logical-search-staging
+      master: github-logical-search
+notifications:
+  email: false
+
