@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Dropdown, Header } from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react'
 
 export const operators = {
   AND: "AND",
@@ -31,11 +31,11 @@ const options = [
 ]
 
 const OperatorSelection = props => (
-  <Header as='h4'>
-    <Header.Content>
-      <Dropdown inline options={options} defaultValue={options[0].value} />
-    </Header.Content>
-  </Header>
+  <Dropdown
+    inline
+    options={options}
+    defaultValue={options[0].value}
+  />
 )
 
 

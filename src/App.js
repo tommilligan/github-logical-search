@@ -5,12 +5,12 @@ import { connect } from 'react-redux'
 import './App.css';
 
 import AppHeader from './header';
-import OperatorSelection from './operatorSelection';
+import NestableFilter from './nestableFilter';
 
 const App = props => (
   <div className="App">
     <AppHeader />
-    <OperatorSelection />
+    <NestableFilter />
   </div>
 )
 
