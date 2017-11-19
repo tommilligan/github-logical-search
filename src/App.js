@@ -1,19 +1,19 @@
 // @flow
 
-import React, { Component } from 'react';
-import AppHeader from './header';
-// import LogicalSelection from './logicalSelection';
+import React from 'react';
+import { connect } from 'react-redux'
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <AppHeader />
-      </div>
-    );
-  }
-}
+import AppHeader from './header';
+// import LogicalSelection from './logicalSelection';
 
-export default App;
+const App = props => (
+  <div className="App">
+    <AppHeader />
+  </div>
+)
 
+export default connect(
+  null, 
+  null
+)(App);
