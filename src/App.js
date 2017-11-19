@@ -5,11 +5,12 @@ import { connect } from 'react-redux'
 import './App.css';
 
 import AppHeader from './header';
-// import LogicalSelection from './logicalSelection';
+import OperatorSelection from './operatorSelection';
 
 const App = props => (
   <div className="App">
     <AppHeader />
+    <OperatorSelection />
   </div>
 )
 
