@@ -76,6 +76,13 @@ function mapStateToProps(state, ownProps) {
 const NestableFilter = props => (
   <Segment.Group>
     <Segment textAlign='left'>
+      {
+        (props.deletable) ? (
+          <Button icon size='medium'>
+            <Icon name='close' size='medium' />
+          </Button>
+        ) : null
+      }
       <Header as='h4'>
         <Header.Content>
           <OperatorSelector/>
@@ -91,16 +98,18 @@ const NestableFilter = props => (
         }}
       >
       </Segment>
-      <Segment.Group>
+      <Segment textAlign='left'>
         {
           props.childIds.map(childId => (
-            <Segment horizontal>
-              <Icon name='close' size='medium' />          
-              <ConnectedNestableFilter id={childId} />
+            <Segment >
+              <ConnectedNestableFilter id={childId} deletable={true} />
             </Segment>
           ))
         }
-      </Segment.Group>
+        <Button icon color='green'>
+          <Icon name='add' />
+        </Button>
+      </Segment>
     </Segment.Group>
   </Segment.Group>
 )
