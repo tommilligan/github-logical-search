@@ -10,7 +10,7 @@ import NestableFilter from './nestableFilter';
 const App = props => (
   <div className="App">
     <AppHeader />
-    <NestableFilter />
+    <NestableFilter id={0} />
   </div>
 )
 
