@@ -1,13 +1,13 @@
-import { DELETE, ADD_FIELD, ADD_NESTED } from './actions';
+// import { DELETE, ADD_FIELD, ADD_NESTED } from './actions';
 
 const initialState = {
   0: {
-    type: 'ested',
+    type: 'nested',
     operator: 'AND',
     childIds: [1]
   },
   1: {
-    type: 'ested',
+    type: 'nested',
     operator: 'AND',
     childIds: []
   }
