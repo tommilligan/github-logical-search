@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import Immutable from 'immutable';
 import uuidv4 from 'uuid/v4';
 
 import { DELETE_FILTER, ADD_FIELD_FILTER, ADD_NESTED_FILTER } from './actions';
@@ -6,21 +6,15 @@ import { DELETE_FILTER, ADD_FIELD_FILTER, ADD_NESTED_FILTER } from './actions';
 const partialFilterData = {
   type: 'nested',
   operator: 'AND',
-  childIds: []
+  childIds: [],
+  field: null,
+  query: null
 }
 
-const initialState = Map({
+const initialState = Immutable.Map({
   '0': {
-    type: 'nested',
-    operator: 'AND',
-    childIds: ['2'],
+    ...partialFilterData,
     parentId: null
-  },
-  '2': {
-    type: 'nested',
-    operator: 'AND',
-    childIds: [],
-    parentId: '0'
   }
 });
 
@@ -29,23 +23,27 @@ export default (state = initialState, action) => {
     case DELETE_FILTER: {
       let filterId = action.data;
       let parentId = state.get(filterId).parentId;
-      let newState = state;
-      console.log(`Deleting filter, f ${filterId} p ${parentId}`)
-
+      let childIds = state.get(filterId).childIds;
+      console.log(`Deleting filter ${filterId}`)
+      console.log(state);
+      console.log(filterId)
+      console.log(parentId)
+      console.log(childIds)
       // Only allowed if we are not at the root node
       if (filterId !== '0') {
-        newState = newState
+        return state
           .update(parentId, parent => {
             let childIds = parent.childIds.filter(childId => childId !== filterId)
-            console.log(childIds);
             return {
               ...parent,
               childIds
             };
-          }).deleteIn(filterId);
-        console.log(newState);
+          })
+          .delete(filterId); 
+          // TODO also delete child keys, as deleteAll is not yet a thing
+      } else {
+        return state;
       }
-      return newState;
     }
     case ADD_NESTED_FILTER: {
       let parentId = action.data;
