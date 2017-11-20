@@ -1,76 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Segment, Icon, Header, Button } from 'semantic-ui-react';
-import * as actions from './actions'
+import { deleteFilter, addFieldFilter, addNestedFilter } from './actions'
 
 import OperatorSelector from '../operatorSelection';
 
-/*
 
-export class Node extends Component {
-  handleIncrementClick = () => {
-    const { increment, id } = this.props
-    increment(id)
-  }
-
-  handleAddChildClick = e => {
-    e.preventDefault()
-
-    const { addChild, createNode, id } = this.props
-    const childId = createNode().nodeId
-    addChild(id, childId)
-  }
-
-  handleRemoveClick = e => {
-    e.preventDefault()
-
-    const { removeChild, deleteNode, parentId, id } = this.props
-    removeChild(parentId, id)
-    deleteNode(id)
-  }
-
-  renderChild = childId => {
-    const { id } = this.props
-    return (
-      <li key={childId}>
-        <ConnectedNode id={childId} parentId={id} />
-      </li>
-    )
-  }
-
-  render() {
-    const { counter, parentId, childIds } = this.props
-    return (
-      <div>
-        Counter: {counter}
-        {' '}
-        <button onClick={this.handleIncrementClick}>
-          +
-        </button>
-        {' '}
-        {typeof parentId !== 'undefined' &&
-          <a href="#" onClick={this.handleRemoveClick} // eslint-disable-line jsx-a11y/href-no-hash
-             style={{ color: 'lightgray', textDecoration: 'none' }}>
-            ×
-          </a>
-        }
-        <ul>
-          {childIds.map(this.renderChild)}
-          <li key="add">
-            <a href="#" // eslint-disable-line jsx-a11y/href-no-hash
-              onClick={this.handleAddChildClick}
-            >
-              Add child
-            </a>
-          </li>
-        </ul>
-      </div>
-    )
-  }
-}
-*/
 function mapStateToProps(state, ownProps) {
-  return state.logicNodes[ownProps.id]
+  return state.logicNodes.get(ownProps.id)
 }
 
 const NestableFilter = props => (
@@ -78,8 +15,12 @@ const NestableFilter = props => (
     <Segment textAlign='left'>
       {
         (props.deletable) ? (
-          <Button icon size='medium'>
-            <Icon name='close' size='medium' />
+          <Button
+            icon
+            size='medium'
+            onClick={(param, data) => props.deleteFilter(props.id)}
+          >
+            <Icon name='close' />
           </Button>
         ) : null
       }
@@ -101,12 +42,16 @@ const NestableFilter = props => (
       <Segment textAlign='left'>
         {
           props.childIds.map(childId => (
-            <Segment >
+            <Segment key={childId}>
               <ConnectedNestableFilter id={childId} deletable={true} />
             </Segment>
           ))
         }
-        <Button icon color='green'>
+        <Button
+          icon
+          color='green'
+          onClick={(param, data) => props.addNestedFilter(props.id)}
+        >
           <Icon name='add' />
         </Button>
       </Segment>
@@ -116,7 +61,11 @@ const NestableFilter = props => (
 
 const ConnectedNestableFilter = connect(
   mapStateToProps,
-  actions
+  {
+    addFieldFilter,
+    addNestedFilter,
+    deleteFilter
+  }
 )(NestableFilter);
 
 export default ConnectedNestableFilter;

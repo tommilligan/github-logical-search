@@ -12,7 +12,7 @@ const App = props => (
   <div className="App">
     <AppHeader />
     <Container>
-      <NestableFilter id={0} />
+      <NestableFilter id='0' />
     </Container>
   </div>
 )
