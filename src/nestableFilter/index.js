@@ -13,27 +13,38 @@ function mapStateToProps(state, ownProps) {
 const NestableFilter = props => (
   <Segment.Group>
     <Segment textAlign='left'>
-      {
-        (props.deletable) ? (
-          <Button
-            icon
-            size='medium'
-            onClick={(param, data) => props.deleteFilter(props.id)}
-          >
-            <Icon name='close' />
-          </Button>
-        ) : null
-      }
-      <Header as='h4'>
-        <Header.Content>
-          <OperatorSelector/>
-        </Header.Content>
-      </Header>      
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+      }}>
+        {
+          (props.deletable) ? (
+            <Button
+              icon
+              size='mini'
+              style={{
+                marginRight: 10
+              }}
+              onClick={(param, data) => props.deleteFilter(props.id)}
+            >
+              <Icon name='close' />
+            </Button>
+          ) : null
+        }
+        <div>
+          <Header as='h4'>
+            <Header.Content>
+              <OperatorSelector/>
+            </Header.Content>
+          </Header>  
+        </div>
+      </div>    
     </Segment>
     <Segment.Group horizontal>
       <Segment
         style={{
-          maxWidth: 20,
+          maxWidth: 10,
           padding: 0,
           backgroundColor: '#EEEEEE'
         }}
@@ -42,18 +53,25 @@ const NestableFilter = props => (
       <Segment textAlign='left'>
         {
           props.childIds.map(childId => (
-            <Segment key={childId}>
-              <ConnectedNestableFilter id={childId} deletable={true} />
-            </Segment>
+            <ConnectedNestableFilter key={childId} id={childId} deletable={true} />
           ))
         }
         <Button
-          icon
+          icon='add'
+          color='blue'
+          size='mini'
+          content='Data'
+          labelPosition='right'
+          onClick={(param, data) => props.addFieldFilter(props.id)}
+        />
+        <Button
+          icon='add'
           color='green'
+          size='mini'
+          content='Nest'
+          labelPosition='right'
           onClick={(param, data) => props.addNestedFilter(props.id)}
-        >
-          <Icon name='add' />
-        </Button>
+        />
       </Segment>
     </Segment.Group>
   </Segment.Group>
