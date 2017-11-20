@@ -25,10 +25,6 @@ export default (state = initialState, action) => {
       let parentId = state.get(filterId).parentId;
       let childIds = state.get(filterId).childIds;
       console.log(`Deleting filter ${filterId}`)
-      console.log(state);
-      console.log(filterId)
-      console.log(parentId)
-      console.log(childIds)
       // Only allowed if we are not at the root node
       if (filterId !== '0') {
         return state
@@ -48,6 +44,7 @@ export default (state = initialState, action) => {
     case ADD_NESTED_FILTER: {
       let parentId = action.data;
       let filterId = uuidv4();
+      console.log(`Adding nested filter ${filterId}`)
       const newState = state
         .update(parentId, parent => {
           let childIds = parent.childIds.concat(filterId)
@@ -64,6 +61,7 @@ export default (state = initialState, action) => {
     case ADD_FIELD_FILTER: {
       let parentId = action.data;
       let filterId = uuidv4();
+      console.log(`Adding field filter ${filterId}`)
       const newState = state
         .update(parentId, parent => {
           let childIds = parent.childIds.concat(filterId)
