@@ -4,7 +4,7 @@ install: yarn install
 cache: yarn
 script:
   - yarn run build
-  - yarn run test -- --coverage
+  # - yarn run test -- --coverage
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 deploy:
