@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 import uuidv4 from 'uuid/v4';
 
-import { DELETE_FILTER, ADD_FIELD_FILTER, ADD_NESTED_FILTER } from './actions';
+import { DELETE_FILTER, ADD_FIELD_FILTER, ADD_NESTED_FILTER, FILTER_OPERATOR } from './actions';
 
 const partialFilterData = {
   type: 'nested',
@@ -20,10 +20,20 @@ const initialState = Immutable.Map({
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case FILTER_OPERATOR: {
+      let { operator, filterId } = action.data;
+      return state
+        .update(filterId, filter => {
+          return {
+            ...filter,
+            operator
+          };
+        })
+    }
     case DELETE_FILTER: {
       let filterId = action.data;
       let parentId = state.get(filterId).parentId;
-      let childIds = state.get(filterId).childIds;
+      // let childIds = state.get(filterId).childIds;
       console.log(`Deleting filter ${filterId}`)
       // Only allowed if we are not at the root node
       if (filterId !== '0') {

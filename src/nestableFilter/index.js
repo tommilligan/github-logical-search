@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Segment, Icon, Header, Button, Dropdown, Input } from 'semantic-ui-react';
-import { deleteFilter, addFieldFilter, addNestedFilter } from './actions'
+import { deleteFilter, addFieldFilter, addNestedFilter, filterOperator } from './actions'
 
 import OperatorSelector from '../operatorSelection';
 import { GITHUB_ISSUE_FILTERS } from '../constants';
@@ -19,6 +19,37 @@ function mapStateToProps(state, ownProps) {
 }
 
 const NestableFilter = props => {
+  let deleteButton = (props.deletable) ? (
+      <Button
+        icon
+        size='mini'
+        style={{
+          marginRight: 10
+        }}
+        onClick={(param, data) => props.deleteFilter(props.id)}
+      >
+        <Icon name='close' />
+      </Button>
+    ) : null;
+
+  let operatorDiv = (
+    <div style={{minWidth: 60}}>
+      <Header as='h4'>
+        <Header.Content>
+          <OperatorSelector
+            operator={props.operator}
+            onChange={(param, data) => {
+              props.filterOperator({
+                operator: data.value,
+                filterId: props.id
+              });
+            }}
+          />
+        </Header.Content>
+      </Header>
+    </div>
+  );
+
   if (props.type === 'nested') {
     return (
       <Segment.Group>
@@ -28,27 +59,8 @@ const NestableFilter = props => {
             flexDirection: 'row',
             alignItems: 'center'
           }}>
-            {
-              (props.deletable) ? (
-                <Button
-                  icon
-                  size='mini'
-                  style={{
-                    marginRight: 10
-                  }}
-                  onClick={(param, data) => props.deleteFilter(props.id)}
-                >
-                  <Icon name='close' />
-                </Button>
-              ) : null
-            }
-            <div>
-              <Header as='h4'>
-                <Header.Content>
-                  <OperatorSelector/>
-                </Header.Content>
-              </Header>  
-            </div>
+            { deleteButton }
+            { operatorDiv }
           </div>    
         </Segment>
         <Segment.Group horizontal>
@@ -97,27 +109,8 @@ const NestableFilter = props => {
           alignItems: 'center',
           flexWrap: 'wrap'
         }}>
-          {
-            (props.deletable) ? (
-              <Button
-                icon
-                size='mini'
-                style={{
-                  marginRight: 10
-                }}
-                onClick={(param, data) => props.deleteFilter(props.id)}
-              >
-                <Icon name='close' />
-              </Button>
-            ) : null
-          }
-          <div style={{minWidth: 60}}>
-            <Header as='h4'>
-              <Header.Content>
-                <OperatorSelector/>
-              </Header.Content>
-            </Header>
-          </div>
+          { deleteButton }
+          {operatorDiv }
           <Dropdown
             options={filterOptions}
             selection
@@ -142,7 +135,8 @@ const ConnectedNestableFilter = connect(
   {
     addFieldFilter,
     addNestedFilter,
-    deleteFilter
+    deleteFilter,
+    filterOperator
   }
 )(NestableFilter);
 

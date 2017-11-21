@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Segment, Icon, Header, Button, Dropdown, Input } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 
 import Issue from './issue';
 
@@ -12,10 +12,9 @@ const IssueList = props => (
   <Segment.Group raised>
     {
       props.issues.map(issue => {
-        <Issue issue />
+        return <Issue key={issue.id} issue={issue} />
       })
     }
-    <Issue />
   </Segment.Group>
 )
 

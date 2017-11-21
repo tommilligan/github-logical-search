@@ -34,7 +34,8 @@ const OperatorSelection = props => (
   <Dropdown
     inline
     options={options}
-    defaultValue={options[0].value}
+    value={props.operator}
+    onChange={props.onChange}
   />
 )
 
