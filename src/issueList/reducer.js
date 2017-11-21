@@ -1,4 +1,3 @@
-import Immutable from 'immutable';
 
 const initialState = {
   page: 1,
