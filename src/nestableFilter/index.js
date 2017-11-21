@@ -123,7 +123,7 @@ const NestableFilter = props => {
               marginLeft: 10,
               width: 300
             }} 
-          />      
+          />
         </div>    
       </Segment>
     );

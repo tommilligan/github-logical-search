@@ -7,12 +7,16 @@ import './App.css';
 
 import AppHeader from './header';
 import NestableFilter from './nestableFilter';
+import MandatoryInfo from './mandatoryInfo';
 import IssueList from './issueList';
+import Notification from './notification';
 
 const App = props => (
   <div className="App">
     <AppHeader />
     <Container>
+      <Notification />
+      <MandatoryInfo />
       <NestableFilter id='0' />
       <IssueList issues={[]} />
     </Container>
