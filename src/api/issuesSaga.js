@@ -1,6 +1,6 @@
 // @flow
 
-import { race, put, select, call, takeEvery } from 'redux-saga/effects';
+import { put, select, call, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 import { issuesFetchFailed, issuesFetchSucceeded } from './actions';
@@ -32,5 +32,8 @@ function* fetchIssues(action) {
 
 export default function* issuesSaga() {
     console.warn("Starting issuesSaga saga");
-    yield takeEvery(MANDATORY_REPOSITORY, fetchIssues);
+    yield [
+      takeLatest(MANDATORY_REPOSITORY, fetchIssues),
+      takeLatest(MANDATORY_USERNAME, fetchIssues)
+    ]
   }

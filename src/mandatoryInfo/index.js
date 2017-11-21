@@ -19,10 +19,10 @@ const MandatoryInfo = props => {
   return (
     <Grid divided='vertically'>
       <Grid.Row columns={2}>
-        <Grid.Column>
+        <Grid.Column style={{margin: 0}}>
           <Input fluid placeholder='username' onChange={changeDebounce(props.mandatoryUsername)} />
         </Grid.Column>
-        <Grid.Column>
+        <Grid.Column style={{margin: 0}}>
           <Input fluid placeholder='repository' onChange={changeDebounce(props.mandatoryRepository)} />
         </Grid.Column>
       </Grid.Row>

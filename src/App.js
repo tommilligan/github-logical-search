@@ -15,8 +15,8 @@ const App = props => (
   <div className="App">
     <AppHeader />
     <Container>
-      <Notification />
       <MandatoryInfo />
+      <Notification />
       <NestableFilter id='0' />
       <IssueList issues={[]} />
     </Container>
